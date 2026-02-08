@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Twelve Rounders — UK Solo Designer</title>
+  <meta name="description" content="Twelve Rounders — UK-based solo designer creating custom boxing fight kits & visuals." />
+
+  <style>
+    :root{
+      --bg:#0b0c0f;
+      --panel:#0f1117;
+      --panel2:#121522;
+      --text:#e9ebf2;
+      --muted:#a7adbd;
+      --gold:#c9a646;
+      --gold2:#f1d27a;
+      --stroke: rgba(255,255,255,0.08);
+      --shadow: 0 20px 80px rgba(0,0,0,0.55);
+      --shadow2: 0 10px 40px rgba(0,0,0,0.5);
+      --radius: 18px;
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1000px 600px at 20% 0%, rgba(201,166,70,0.10), transparent 60%),
+                  radial-gradient(900px 700px at 85% 15%, rgba(201,166,70,0.08), transparent 65%),
+                  radial-gradient(900px 700px at 50% 100%, rgba(255,255,255,0.03), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    /* Subtle grain */
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+      mix-blend-mode:overlay;
+      opacity:.18;
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+
+    .wrap{ width:min(1120px, calc(100% - 40px)); margin:0 auto; }
+
+    /* Top ribbon */
+    .ribbon{
+      position:sticky; top:0;
+      z-index:50;
+      background: linear-gradient(180deg, rgba(10,11,14,0.92), rgba(10,11,14,0.75));
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--stroke);
+    }
+    .ribbon-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:10px 0;
+      gap:14px;
+    }
+    .tag{
+      display:inline-flex; align-items:center; gap:10px;
+      font-size:13px;
+      color:var(--muted);
+      letter-spacing:.35px;
+      white-space:nowrap;
+    }
+    .tag .dot{
+      width:9px; height:9px; border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, var(--gold2), var(--gold));
+      box-shadow: 0 0 0 5px rgba(201,166,70,0.10);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{ transform:scale(1); box-shadow: 0 0 0 5px rgba(201,166,70,0.10); }
+      50%{ transform:scale(1.12); box-shadow: 0 0 0 9px rgba(201,166,70,0.06); }
+    }
+
+    .nav{
+      display:flex; align-items:center; gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .nav a{
+      font-size:12.5px;
+      color:var(--muted);
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid transparent;
+      transition: .2s ease;
+    }
+    .nav a:hover{
+      color:var(--text);
+      border-color: rgba(201,166,70,0.25);
+      background: rgba(201,166,70,0.06);
+    }
+
+    /* Hero */
+    header{
+      position:relative;
+      padding:64px 0 22px;
+    }
+    .hero{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap:22px;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      .hero{ grid-template-columns:1fr; }
+    }
+
+    .hero-card{
+      position:relative;
+      padding:28px;
+      border-radius: calc(var(--radius) + 4px);
+      background: linear-gradient(180deg, rgba(18,20,28,0.82), rgba(13,15,22,0.92));
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .hero-card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(600px 240px at 15% 10%, rgba(201,166,70,0.26), transparent 55%),
+        radial-gradient(700px 320px at 90% 10%, rgba(201,166,70,0.16), transparent 60%),
+        linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+      opacity:.85;
+      pointer-events:none;
+    }
+    .hero-card::after{
+      content:"";
+      position:absolute;
+      width:520px; height:520px;
+      left:-220px; top:-240px;
+      background: radial-gradient(circle at 30% 30%, rgba(201,166,70,0.22), transparent 60%);
+      filter: blur(2px);
+      transform: rotate(18deg);
+      pointer-events:none;
+      animation: floaty 10s ease-in-out infinite;
+    }
+    @keyframes floaty{
+      0%,100%{ transform: translateY(0) rotate(18deg); opacity:.85; }
+      50%{ transform: translateY(18px) rotate(18deg); opacity:.65; }
+    }
+
+    .hero-topline{
+      position:relative;
+      display:flex; align-items:center; gap:12px;
+      margin-bottom:10px;
+      color: var(--muted);
+      font-size:13px;
+      letter-spacing:.4px;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 11px;
+      border-radius:999px;
+      border:1px solid rgba(201,166,70,0.28);
+      background: rgba(201,166,70,0.07);
+      color: var(--gold2);
+    }
+    .pill b{ color:var(--gold2); font-weight:700; }
+    .hero h1{
+      position:relative;
+      margin:0;
+      font-size:42px;
+      line-height:1.05;
+      letter-spacing:-0.6px;
+    }
+    @media (max-width: 520px){
+      .hero h1{ font-size:34px; }
+    }
+    .accent{
+      background: linear-gradient(90deg, var(--gold2), var(--gold));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .hero p{
+      position:relative;
+      margin:14px 0 0;
+      color:#d3d7e5;
+      line-height:1.65;
+      font-size:16.2px;
+      max-width: 62ch;
+    }
+
+    .cta-row{
+      position:relative;
+      margin-top:18px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-weight:700;
+      letter-spacing:.2px;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(201,166,70,0.28);
+    }
+    .btn.primary{
+      border-color: rgba(201,166,70,0.40);
+      background: linear-gradient(180deg, rgba(201,166,70,0.95), rgba(177,140,49,0.98));
+      color:#0b0c0f;
+      box-shadow: 0 18px 45px rgba(201,166,70,0.18);
+    }
+    .btn.primary:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 22px 60px rgba(201,166,70,0.22);
+    }
+
+    .mini{
+      position:relative;
+      display:flex; gap:14px;
+      margin-top:18px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font-size:12.8px;
+    }
+    .mini span{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+    }
+    .mini i{
+      width:9px; height:9px; border-radius:999px;
+      background: rgba(201,166,70,0.9);
+      box-shadow: 0 0 0 5px rgba(201,166,70,0.08);
+    }
+
+    /* Side card */
+    .side{
+      padding:22px;
+      border-radius: calc(var(--radius) + 4px);
+      background: linear-gradient(180deg, rgba(18,20,28,0.60), rgba(13,15,22,0.88));
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+      position:relative;
+    }
+    .side::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(460px 240px at 50% 0%, rgba(201,166,70,0.22), transparent 60%);
+      pointer-events:none;
+      opacity:.75;
+    }
+    .brand-row{
+      position:relative;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:14px;
+    }
+    .logo{
+      width:62px; height:62px;
+      border-radius: 16px;
+      overflow:hidden;
+      border:1px solid rgba(201,166,70,0.35);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.45);
+      background: rgba(255,255,255,0.03);
+    }
+    .logo img{ width:100%; height:100%; object-fit:cover; transform: scale(1.02); }
+    .brand-meta .name{
+      font-weight:900;
+      letter-spacing:1px;
+      font-size:16px;
+    }
+    .brand-meta .sub{
+      margin-top:4px;
+      color:var(--muted);
+      font-size:12.5px;
+    }
+    .side h3{
+      position:relative;
+      margin:12px 0 8px;
+      font-size:16px;
+      letter-spacing:.2px;
+    }
+    .list{
+      position:relative;
+      margin:0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+      color:#d6d9e6;
+      font-size:13.5px;
+    }
+    .list li{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:10px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+    }
+    .check{
+      width:18px; height:18px;
+      border-radius:6px;
+      background: rgba(201,166,70,0.18);
+      border:1px solid rgba(201,166,70,0.35);
+      flex:0 0 auto;
+      margin-top:1px;
+      position:relative;
+    }
+    .check::after{
+      content:"";
+      position:absolute;
+      left:4px; top:3px;
+      width:8px; height:5px;
+      border-left:2px solid var(--gold2);
+      border-bottom:2px solid var(--gold2);
+      transform: rotate(-45deg);
+    }
+
+    /* Sections */
+    section{ padding:46px 0; }
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:18px;
+    }
+    .section-head h2{
+      margin:0;
+      font-size:22px;
+      letter-spacing:-0.3px;
+    }
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      max-width: 65ch;
+      line-height:1.5;
+      font-size:13.8px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+    }
+
+    .card{
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(18,20,28,0.52), rgba(13,15,22,0.88));
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+      padding:18px;
+      position:relative;
+      overflow:hidden;
+      transform: translateY(10px);
+      opacity:0;
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .card.reveal{
+      opacity:1;
+      transform: translateY(0);
+    }
+    .card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(380px 160px at 18% 0%, rgba(201,166,70,0.16), transparent 65%),
+                  radial-gradient(420px 220px at 92% 10%, rgba(255,255,255,0.04), transparent 70%);
+      pointer-events:none;
+      opacity:.85;
+    }
+    .card .title{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:8px;
+    }
+    .badge{
+      font-size:11px;
+      color: var(--gold2);
+      border:1px solid rgba(201,166,70,0.28);
+      background: rgba(201,166,70,0.06);
+      padding:6px 10px;
+      border-radius:999px;
+      letter-spacing:.35px;
+      white-space:nowrap;
+    }
+    .card h3{
+      position:relative;
+      margin:0;
+      font-size:16px;
+      letter-spacing:.2px;
+    }
+    .card p{
+      position:relative;
+      margin:10px 0 0;
+      color:#d3d7e5;
+      line-height:1.6;
+      font-size:13.8px;
+    }
+
+    /* Services */
+    .col-4{ grid-column: span 4; }
+    .col-6{ grid-column: span 6; }
+    .col-12{ grid-column: span 12; }
+    @media (max-width: 900px){
+      .col-4, .col-6{ grid-column: span 12; }
+    }
+
+    /* Process */
+    .step{
+      display:flex; gap:12px; align-items:flex-start;
+    }
+    .num{
+      flex:0 0 auto;
+      width:36px; height:36px;
+      border-radius: 12px;
+      display:grid; place-items:center;
+      font-weight:900;
+      color:#0b0c0f;
+      background: linear-gradient(180deg, var(--gold2), var(--gold));
+      box-shadow: 0 14px 40px rgba(201,166,70,0.18);
+      margin-top:2px;
+    }
+    .step strong{ display:block; font-size:14.5px; }
+    .step small{ display:block; margin-top:5px; color:var(--muted); line-height:1.5; font-size:12.8px; }
+
+    /* Portfolio */
+    .portfolio{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+    }
+    .shot{
+      grid-column: span 4;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,0.09);
+      background: linear-gradient(180deg, rgba(18,20,28,0.45), rgba(13,15,22,0.90));
+      overflow:hidden;
+      position:relative;
+      min-height: 155px;
+      cursor:pointer;
+      transform: translateY(10px);
+      opacity:0;
+      transition: opacity .6s ease, transform .6s ease, border-color .2s ease;
+    }
+    .shot.reveal{ opacity:1; transform: translateY(0); }
+    .shot:hover{ border-color: rgba(201,166,70,0.35); }
+    .shot::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(420px 200px at 20% 0%, rgba(201,166,70,0.18), transparent 65%),
+        radial-gradient(520px 260px at 90% 0%, rgba(255,255,255,0.04), transparent 65%),
+        linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0));
+      pointer-events:none;
+    }
+    .shot .inner{
+      position:absolute; inset:0;
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      gap:8px;
+    }
+    .shot .label{
+      font-weight:900;
+      letter-spacing:.25px;
+    }
+    .shot .desc{
+      color:var(--muted);
+      font-size:12.5px;
+      line-height:1.4;
+      max-width: 46ch;
+    }
+    .shot .chiprow{
+      display:flex; gap:8px; flex-wrap:wrap;
+      margin-top:2px;
+    }
+    .chip{
+      font-size:11px;
+      padding:6px 9px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.09);
+      background: rgba(255,255,255,0.03);
+      color:#d7dbea;
+    }
+    @media (max-width: 900px){
+      .shot{ grid-column: span 12; min-height: 145px; }
+    }
+
+    /* Pricing */
+    .price{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+      margin-top:10px;
+      padding-top:12px;
+      border-top:1px solid rgba(255,255,255,0.08);
+    }
+    .price .range{
+      font-weight:900;
+      font-size:18px;
+      letter-spacing:-0.2px;
+    }
+    .price .note{
+      color:var(--muted);
+      font-size:12.5px;
+    }
+
+    /* FAQ */
+    details{
+      border:1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding:12px 14px;
+      transition: border-color .2s ease, background .2s ease;
+    }
+    details[open]{
+      border-color: rgba(201,166,70,0.28);
+      background: rgba(201,166,70,0.06);
+    }
+    summary{
+      cursor:pointer;
+      list-style:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      font-weight:800;
+      letter-spacing:.15px;
+      padding:4px 0;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    .arrow{
+      width:26px; height:26px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      display:grid; place-items:center;
+      transition: transform .18s ease, border-color .18s ease;
+      flex:0 0 auto;
+    }
+    details[open] .arrow{ transform: rotate(90deg); border-color: rgba(201,166,70,0.25); }
+    .faq p{ margin:10px 0 0; color:#d3d7e5; line-height:1.6; font-size:13.5px; }
+
+    /* Footer CTA */
+    .final{
+      padding:52px 0 70px;
+    }
+    .cta{
+      border-radius: calc(var(--radius) + 8px);
+      border:1px solid rgba(201,166,70,0.25);
+      background:
+        radial-gradient(800px 220px at 20% 10%, rgba(201,166,70,0.22), transparent 55%),
+        radial-gradient(900px 260px at 90% 10%, rgba(255,255,255,0.04), transparent 60%),
+        linear-gradient(180deg, rgba(18,20,28,0.60), rgba(13,15,22,0.92));
+      padding:26px;
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .cta h2{ margin:0; font-size:22px; }
+    .cta p{ margin:10px 0 0; color:#d3d7e5; line-height:1.6; max-width:70ch; }
+    .cta .cta-row{ margin-top:16px; }
+    footer{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:12.5px;
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+      padding-bottom: 10px;
+    }
+
+    /* Modal */
+    .modal{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(10px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:200;
+    }
+    .modal.show{ display:flex; }
+    .modal-card{
+      width:min(760px, 100%);
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,0.10);
+      background: linear-gradient(180deg, rgba(18,20,28,0.80), rgba(13,15,22,0.96));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .modal-card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(700px 260px at 20% 0%, rgba(201,166,70,0.22), transparent 60%);
+      pointer-events:none;
+      opacity:.85;
+    }
+    .modal-top{
+      position:relative;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      padding:14px 14px 0;
+    }
+    .modal-top .title{
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+    .close{
+      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color:var(--text);
+      border-radius: 12px;
+      padding:9px 12px;
+      cursor:pointer;
+      font-weight:800;
+      transition:.18s ease;
+    }
+    .close:hover{
+      border-color: rgba(201,166,70,0.25);
+      background: rgba(201,166,70,0.08);
+      transform: translateY(-1px);
+    }
+    .modal-body{
+      position:relative;
+      padding: 14px;
+    }
+    .placeholder{
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:
+        radial-gradient(600px 260px at 20% 10%, rgba(201,166,70,0.18), transparent 60%),
+        radial-gradient(700px 300px at 85% 10%, rgba(255,255,255,0.05), transparent 65%),
+        linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0));
+      min-height: 320px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      padding:16px;
+      gap:14px;
+    }
+    .placeholder .left b{
+      display:block;
+      font-size:16px;
+      margin-bottom:6px;
+    }
+    .placeholder .left span{
+      color:var(--muted);
+      font-size:12.8px;
+      line-height:1.5;
+      display:block;
+      max-width: 60ch;
+    }
+    .placeholder .right{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:flex-end;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Sticky ribbon -->
+  <div class="ribbon">
+    <div class="wrap ribbon-inner">
+      <div class="tag">
+        <span class="dot" aria-hidden="true"></span>
+        🇬🇧 United Kingdom Based — Solo Designer
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="#services">Services</a>
+        <a href="#process">How it works</a>
+        <a href="#work">Work</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <header>
+    <div class="wrap hero">
+      <div class="hero-card">
+        <div class="hero-topline">
+          <span class="pill">Twelve Rounders <b>•</b> Custom Boxing Visuals</span>
+          <span>Built for fight-night realism.</span>
+        </div>
+
+        <h1>
+          I design <span class="accent">custom fight kits</span><br/>
+          & boxing visuals — made to look authentic.
+        </h1>
+
+        <p>
+          I’m a UK-based designer and I run <b>Twelve Rounders</b>, a solo boxing-design business where I create custom fight kits and visuals built to look like they belong on fight night. I handle everything myself from start to finish — designing shorts, gloves, boots and full colourways, refining details, and making sure each piece matches the fighter, era, or concept it’s based on. I started this because I wanted boxing kits and graphics to feel authentic, sharp and personal rather than generic, and that’s what I focus on with every commission. Most of my work is custom, so when someone orders from me they’re dealing directly with the designer, sending references, ideas and colours, and I turn that into a finished piece that’s ready to use. Whether it’s a clean modern kit, a recreation of a real fight look, or a fully original design, Twelve Rounders is about detail, accuracy and making visuals that actually look like they belong in the ring.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn primary" href="#contact">Order a Kit</a>
+          <a class="btn" href="#work">View My Work</a>
+          <a class="btn" href="https://www.instagram.com/twelverounders/" target="_blank" rel="noopener">Instagram</a>
+        </div>
+
+        <div class="mini" aria-label="Highlights">
+          <span><i aria-hidden="true"></i> Solo creator (direct contact)</span>
+          <span><i aria-hidden="true"></i> Detail-focused, fight-night look</span>
+          <span><i aria-hidden="true"></i> Custom commissions</span>
+        </div>
+      </div>
+
+		<aside class="side" aria-label="Brand card">
+		  <div class="brand-row">
+			<div class="logo" aria-hidden="true">
+			  <img src="logo.png" alt="Twelve Rounders logo" loading="lazy">
+			</div>
+			<div class="brand-meta">
+			  <div class="name">TWELVE ROUNDERS</div>
+			  <div class="sub">Black • Grey • Gold — premium boxing aesthetic</div>
+			</div>
+		  </div>
+
+
+        <h3>What I’m known for</h3>
+        <ul class="list">
+          <li><span class="check" aria-hidden="true"></span><span><b>Authentic visuals</b> — clean, realistic, fight-night energy.</span></li>
+          <li><span class="check" aria-hidden="true"></span><span><b>Custom detail</b> — accurate colours, trims, sponsors & style.</span></li>
+          <li><span class="check" aria-hidden="true"></span><span><b>Smooth process</b> — message me, send refs, I build it.</span></li>
+        </ul>
+
+        <div class="cta-row" style="margin-top:14px;">
+          <a class="btn" href="#pricing">See Pricing</a>
+          <a class="btn" href="#services">What I Offer</a>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>What I offer</h2>
+          <p>Everything is made by me — designed around your references, your idea, and your exact look.</p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card col-4 reveal-on-scroll">
+          <div class="title">
+            <h3>Fight Kits</h3>
+            <span class="badge">Core Service</span>
+          </div>
+          <p>Custom shorts, colourways, trims, and full kit concepts designed to look like real fight-night gear.</p>
+        </div>
+
+        <div class="card col-4 reveal-on-scroll">
+          <div class="title">
+            <h3>Gloves & Boots</h3>
+            <span class="badge">Add-On</span>
+          </div>
+          <p>Matching gloves and boots to complete the full look — consistent style, branding and colours.</p>
+        </div>
+
+        <div class="card col-4 reveal-on-scroll">
+          <div class="title">
+            <h3>Posters & Visuals</h3>
+            <span class="badge">Optional</span>
+          </div>
+          <p>Promo visuals for your drops, matchups or pages — clean, high-contrast boxing graphic style.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section id="process">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>How it works</h2>
+          <p>A simple commission flow so you know exactly what to send and what you’re getting back.</p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card col-6 reveal-on-scroll">
+          <div class="step">
+            <div class="num">1</div>
+            <div>
+              <strong>Message me with your references</strong>
+              <small>Send photos, colours, logos, fighter names, and any notes (clean, retro, modern, etc.).</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="card col-6 reveal-on-scroll">
+          <div class="step">
+            <div class="num">2</div>
+            <div>
+              <strong>I confirm the price + timeframe</strong>
+              <small>I’ll tell you what’s possible, what I need, and the turnaround based on detail.</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="card col-6 reveal-on-scroll">
+          <div class="step">
+            <div class="num">3</div>
+            <div>
+              <strong>You pay and I start building</strong>
+              <small>Once payment is sorted, I create the kit with the exact look you asked for.</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="card col-6 reveal-on-scroll">
+          <div class="step">
+            <div class="num">4</div>
+            <div>
+              <strong>Delivery + small tweaks</strong>
+              <small>I send the finished work and can adjust small details if needed (colours, trims, etc.).</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work -->
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Featured work</h2>
+          <p>Click any card for a clean “preview panel”. You can replace these placeholders with real images later.</p>
+        </div>
+      </div>
+
+      <div class="portfolio">
+        <div class="shot reveal-on-scroll" data-title="Fight Kit — Premium Clean" data-desc="A clean, fight-night kit with accurate trims, balanced sponsors, and a polished finish." data-tags="Shorts,Colourway,Premium">
+          <div class="inner">
+            <div class="label">Premium Clean Kit</div>
+            <div class="desc">High-detail look with gold accents and sharp contrast.</div>
+            <div class="chiprow">
+              <span class="chip">Shorts</span><span class="chip">Gold Accents</span><span class="chip">Clean</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="shot reveal-on-scroll" data-title="Fight Kit — Retro/Classic" data-desc="Classic boxing styling with vintage tones and minimal sponsor layout." data-tags="Retro,Classic,Minimal">
+          <div class="inner">
+            <div class="label">Retro / Classic Style</div>
+            <div class="desc">Old-school vibe, modern quality.</div>
+            <div class="chiprow">
+              <span class="chip">Retro</span><span class="chip">Minimal</span><span class="chip">Classic</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="shot reveal-on-scroll" data-title="Full Set — Shorts + Gloves + Boots" data-desc="A full matching set designed as one complete look." data-tags="Full Set,Gloves,Boots">
+          <div class="inner">
+            <div class="label">Full Set</div>
+            <div class="desc">Shorts, gloves and boots matched perfectly.</div>
+            <div class="chiprow">
+              <span class="chip">Full Set</span><span class="chip">Gloves</span><span class="chip">Boots</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Pricing</h2>
+          <p>Keep it simple on the website — you can adjust these ranges anytime.</p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card col-4 reveal-on-scroll">
+          <div class="title">
+            <h3>Basic Kit</h3>
+            <span class="badge">Starter</span>
+          </div>
+          <p>Clean design, simple layout, fast turnaround. Perfect for a quick custom look.</p>
+          <div class="price">
+            <div class="range">£5–£10</div>
+            <div class="note">Depends on detail</div>
+          </div>
+        </div>
+
+        <div class="card col-4 reveal-on-scroll">
+          <div class="title">
+            <h3>Detailed Kit</h3>
+            <span class="badge">Popular</span>
+          </div>
+          <p>More detail, sharper accuracy, upgraded trims and sponsor layout. Built to look real.</p>
+          <div class="price">
+            <div class="range">£10–£15</div>
+            <div class="note">Most commissions</div>
+          </div>
+        </div>
+
+        <div class="card col-4 reveal-on-scroll">
+          <div class="title">
+            <h3>Premium / Full Set</h3>
+            <span class="badge">Highest Detail</span>
+          </div>
+          <p>Full set concepts (shorts + extras), complex references, and the most polished finish.</p>
+          <div class="price">
+            <div class="range">DM for quote</div>
+            <div class="note">Bulk discounts possible</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>FAQ</h2>
+          <p>Short answers so people don’t hesitate — then your CTA is right after.</p>
+        </div>
+      </div>
+
+      <div class="grid faq">
+        <div class="col-6 reveal-on-scroll">
+          <details>
+            <summary>
+              What do you need from me?
+              <span class="arrow" aria-hidden="true">›</span>
+            </summary>
+            <p>Send references (images), colours, any logos/text, and the style you want (clean, retro, modern, etc.). The clearer the reference, the cleaner the result.</p>
+          </details>
+        </div>
+
+        <div class="col-6 reveal-on-scroll">
+          <details>
+            <summary>
+              How long does it take?
+              <span class="arrow" aria-hidden="true">›</span>
+            </summary>
+            <p>Turnaround depends on the detail level and how many commissions I’m working on. When you message me, I’ll tell you the timeframe up front.</p>
+          </details>
+        </div>
+
+        <div class="col-6 reveal-on-scroll">
+          <details>
+            <summary>
+              Do you do revisions?
+              <span class="arrow" aria-hidden="true">›</span>
+            </summary>
+            <p>Yes — small tweaks like colours, trim placement, or minor adjustments are usually fine. Big redesigns may be treated as a new commission.</p>
+          </details>
+        </div>
+
+        <div class="col-6 reveal-on-scroll">
+          <details>
+            <summary>
+              How do I order?
+              <span class="arrow" aria-hidden="true">›</span>
+            </summary>
+            <p>Hit “Order a Kit” below, message me your references, and I’ll confirm the price and timeframe. Simple.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="final">
+    <div class="wrap">
+      <div class="cta reveal-on-scroll">
+        <h2>Ready to order a kit?</h2>
+        <p>
+          If you want a custom kit that actually looks like it belongs on fight night, message me and send your references.
+          You’re dealing directly with the creator — I’ll confirm pricing and get it built.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn primary" href="https://www.instagram.com/twelverounders/" target="_blank" rel="noopener">DM me on Instagram</a>
+          <a class="btn" href="#work">View Featured Work</a>
+          <a class="btn" href="#services">Services</a>
+        </div>
+      </div>
+
+      <footer>
+        <div>© <span id="year"></span> Twelve Rounders — UK Solo Designer</div>
+        <div>Black • Grey • Gold • Built for fight-night visuals</div>
+      </footer>
+    </div>
+  </section>
+
+  <!-- Modal (portfolio preview) -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-top">
+        <div class="title" id="modalTitle">Preview</div>
+        <button class="close" id="closeBtn" type="button">Close</button>
+      </div>
+      <div class="modal-body">
+        <div class="placeholder">
+          <div class="left">
+            <b id="modalBig">Premium Clean Kit</b>
+            <span id="modalDesc">A clean, fight-night kit with accurate trims, balanced sponsors, and a polished finish.</span>
+          </div>
+          <div class="right" id="modalTags"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll(".reveal-on-scroll");
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries){
+        if(e.isIntersecting){
+          e.target.classList.add("reveal");
+          io.unobserve(e.target);
+        }
+      }
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => io.observe(el));
+
+    // Portfolio modal
+    const modal = document.getElementById("modal");
+    const closeBtn = document.getElementById("closeBtn");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalBig = document.getElementById("modalBig");
+    const modalDesc = document.getElementById("modalDesc");
+    const modalTags = document.getElementById("modalTags");
+
+    function openModal({title, desc, tags}){
+      modalTitle.textContent = title;
+      modalBig.textContent = title;
+      modalDesc.textContent = desc;
+
+      modalTags.innerHTML = "";
+      (tags || []).forEach(t => {
+        const chip = document.createElement("span");
+        chip.className = "chip";
+        chip.textContent = t;
+        modalTags.appendChild(chip);
+      });
+
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden","false");
+      document.body.style.overflow = "hidden";
+      closeBtn.focus();
+    }
+
+    function closeModal(){
+      modal.classList.remove("show");
+      modal.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
+    }
+
+    document.querySelectorAll(".shot").forEach(card => {
+      card.addEventListener("click", () => {
+        const title = card.getAttribute("data-title") || "Preview";
+        const desc = card.getAttribute("data-desc") || "";
+        const tagsRaw = card.getAttribute("data-tags") || "";
+        const tags = tagsRaw.split(",").map(s => s.trim()).filter(Boolean);
+        openModal({title, desc, tags});
+      });
+    });
+
+    closeBtn.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => {
+      if(e.target === modal) closeModal();
+    });
+    window.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" && modal.classList.contains("show")) closeModal();
+    });
+  </script>
+</body>
+</html>
