@@ -23,18 +23,19 @@
 
     *{ box-sizing:border-box; }
     html{ scroll-behavior:smooth; }
+    html, body{ width:100%; overflow-x:hidden; }
     body{
       margin:0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
       background: radial-gradient(1000px 600px at 20% 0%, rgba(201,166,70,0.10), transparent 60%),
                   radial-gradient(900px 700px at 85% 15%, rgba(201,166,70,0.08), transparent 65%),
                   radial-gradient(900px 700px at 50% 100%, rgba(255,255,255,0.03), transparent 60%),
                   var(--bg);
       color:var(--text);
-      overflow-x:hidden;
     }
 
-    /* Subtle grain */
     body::before{
       content:"";
       position:fixed; inset:0;
@@ -48,14 +49,20 @@
     a{ color:inherit; text-decoration:none; }
 
     .wrap{ width:min(1120px, calc(100% - 40px)); margin:0 auto; }
+    @media (max-width: 760px){
+      .wrap{ width:min(1120px, calc(100% - 32px)); }
+    }
+    @media (max-width: 420px){
+      .wrap{ width:calc(100% - 22px); }
+    }
 
-    /* Top ribbon */
     .ribbon{
       position:sticky; top:0;
       z-index:50;
       background: linear-gradient(180deg, rgba(10,11,14,0.92), rgba(10,11,14,0.75));
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--stroke);
+      padding-top: env(safe-area-inset-top);
     }
     .ribbon-inner{
       display:flex; align-items:center; justify-content:space-between;
@@ -92,6 +99,7 @@
       border-radius:999px;
       border:1px solid transparent;
       transition: .2s ease;
+      flex: 0 0 auto;
     }
     .nav a:hover{
       color:var(--text);
@@ -99,11 +107,30 @@
       background: rgba(201,166,70,0.06);
     }
 
-    /* Hero */
+    @media (max-width: 760px){
+      .ribbon-inner{
+        flex-direction: column;
+        align-items: flex-start;
+        gap:10px;
+      }
+      .nav{
+        width:100%;
+        justify-content:flex-start;
+        overflow-x:auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom:4px;
+      }
+      .tag{ white-space:normal; }
+    }
+
     header{
       position:relative;
       padding:64px 0 22px;
     }
+    @media (max-width: 900px){
+      header{ padding:44px 0 18px; }
+    }
+
     .hero{
       display:grid;
       grid-template-columns: 1.25fr .75fr;
@@ -123,6 +150,10 @@
       box-shadow: var(--shadow);
       overflow:hidden;
     }
+    @media (max-width: 900px){
+      .hero-card{ padding:20px; }
+    }
+
     .hero-card::before{
       content:"";
       position:absolute; inset:-2px;
@@ -156,6 +187,7 @@
       color: var(--muted);
       font-size:13px;
       letter-spacing:.4px;
+      flex-wrap:wrap;
     }
     .pill{
       display:inline-flex; align-items:center; gap:8px;
@@ -173,9 +205,14 @@
       line-height:1.05;
       letter-spacing:-0.6px;
     }
-    @media (max-width: 520px){
-      .hero h1{ font-size:34px; }
+    @media (max-width: 760px){
+      .hero h1{ font-size:32px; }
     }
+    @media (max-width: 420px){
+      .hero h1{ font-size:28px; }
+      .pill{ font-size:12px; padding:6px 10px; }
+    }
+
     .accent{
       background: linear-gradient(90deg, var(--gold2), var(--gold));
       -webkit-background-clip:text;
@@ -189,6 +226,9 @@
       line-height:1.65;
       font-size:16.2px;
       max-width: 62ch;
+    }
+    @media (max-width: 760px){
+      .hero p{ font-size:15.4px; }
     }
 
     .cta-row{
@@ -205,6 +245,7 @@
       justify-content:center;
       gap:10px;
       padding:12px 14px;
+      min-height:44px;
       border-radius: 12px;
       border:1px solid rgba(255,255,255,0.10);
       background: rgba(255,255,255,0.04);
@@ -230,6 +271,9 @@
       transform: translateY(-2px);
       box-shadow: 0 22px 60px rgba(201,166,70,0.22);
     }
+    @media (max-width: 760px){
+      .cta-row .btn{ width:100%; }
+    }
 
     .mini{
       position:relative;
@@ -251,8 +295,10 @@
       background: rgba(201,166,70,0.9);
       box-shadow: 0 0 0 5px rgba(201,166,70,0.08);
     }
+    @media (max-width: 760px){
+      .mini span{ width:100%; }
+    }
 
-    /* Side card */
     .side{
       padding:22px;
       border-radius: calc(var(--radius) + 4px);
@@ -261,6 +307,9 @@
       box-shadow: var(--shadow2);
       overflow:hidden;
       position:relative;
+    }
+    @media (max-width: 900px){
+      .side{ padding:18px; }
     }
     .side::before{
       content:"";
@@ -283,6 +332,7 @@
       border:1px solid rgba(201,166,70,0.35);
       box-shadow: 0 14px 40px rgba(0,0,0,0.45);
       background: rgba(255,255,255,0.03);
+      flex: 0 0 auto;
     }
     .logo img{ width:100%; height:100%; object-fit:cover; transform: scale(1.02); }
     .brand-meta .name{
@@ -337,7 +387,6 @@
       transform: rotate(-45deg);
     }
 
-    /* Sections */
     section{ padding:46px 0; }
     .section-head{
       display:flex;
@@ -345,6 +394,7 @@
       justify-content:space-between;
       gap:18px;
       margin-bottom:18px;
+      flex-wrap:wrap;
     }
     .section-head h2{
       margin:0;
@@ -395,6 +445,7 @@
       justify-content:space-between;
       gap:10px;
       margin-bottom:8px;
+      flex-wrap:wrap;
     }
     .badge{
       font-size:11px;
@@ -420,7 +471,6 @@
       font-size:13.8px;
     }
 
-    /* Services */
     .col-4{ grid-column: span 4; }
     .col-6{ grid-column: span 6; }
     .col-12{ grid-column: span 12; }
@@ -428,7 +478,6 @@
       .col-4, .col-6{ grid-column: span 12; }
     }
 
-    /* Process */
     .step{
       display:flex; gap:12px; align-items:flex-start;
     }
@@ -446,7 +495,6 @@
     .step strong{ display:block; font-size:14.5px; }
     .step small{ display:block; margin-top:5px; color:var(--muted); line-height:1.5; font-size:12.8px; }
 
-    /* Portfolio */
     .portfolio{
       display:grid;
       grid-template-columns: repeat(12, 1fr);
@@ -476,6 +524,18 @@
         linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0));
       pointer-events:none;
     }
+    .shot-img{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      opacity:.55;
+      transform:scale(1.03);
+      transition: opacity .25s ease, transform .35s ease;
+      pointer-events:none;
+    }
+    .shot:hover .shot-img{ opacity:.72; transform:scale(1.07); }
     .shot .inner{
       position:absolute; inset:0;
       padding:16px;
@@ -506,16 +566,19 @@
       background: rgba(255,255,255,0.03);
       color:#d7dbea;
     }
-    @media (max-width: 900px){
+    @media (max-width: 1024px){
+      .shot{ grid-column: span 6; min-height: 165px; }
+    }
+    @media (max-width: 760px){
       .shot{ grid-column: span 12; min-height: 145px; }
     }
 
-    /* Pricing */
     .price{
       display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
       margin-top:10px;
       padding-top:12px;
       border-top:1px solid rgba(255,255,255,0.08);
+      flex-wrap:wrap;
     }
     .price .range{
       font-weight:900;
@@ -527,7 +590,6 @@
       font-size:12.5px;
     }
 
-    /* FAQ */
     details{
       border:1px solid rgba(255,255,255,0.08);
       background: rgba(255,255,255,0.03);
@@ -563,7 +625,6 @@
     details[open] .arrow{ transform: rotate(90deg); border-color: rgba(201,166,70,0.25); }
     .faq p{ margin:10px 0 0; color:#d3d7e5; line-height:1.6; font-size:13.5px; }
 
-    /* Footer CTA */
     .final{
       padding:52px 0 70px;
     }
@@ -593,7 +654,6 @@
       padding-bottom: 10px;
     }
 
-    /* Modal */
     .modal{
       position:fixed; inset:0;
       background: rgba(0,0,0,0.72);
@@ -611,7 +671,8 @@
       border:1px solid rgba(255,255,255,0.10);
       background: linear-gradient(180deg, rgba(18,20,28,0.80), rgba(13,15,22,0.96));
       box-shadow: var(--shadow);
-      overflow:hidden;
+      overflow:auto;
+      max-height: 92vh;
       position:relative;
     }
     .modal-card::before{
@@ -685,8 +746,18 @@
       justify-content:flex-end;
       align-items:flex-end;
     }
+    @media (max-width: 520px){
+      .placeholder{
+        min-height: 220px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .placeholder .right{
+        justify-content:flex-start;
+        align-items:flex-start;
+      }
+    }
 
-    /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
       *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
     }
@@ -694,7 +765,6 @@
 </head>
 
 <body>
-  <!-- Sticky ribbon -->
   <div class="ribbon">
     <div class="wrap ribbon-inner">
       <div class="tag">
@@ -712,7 +782,6 @@
     </div>
   </div>
 
-  <!-- Hero -->
   <header>
     <div class="wrap hero">
       <div class="hero-card">
@@ -743,17 +812,16 @@
         </div>
       </div>
 
-		<aside class="side" aria-label="Brand card">
-		  <div class="brand-row">
-			<div class="logo" aria-hidden="true">
-			  <img src="logo.png" alt="Twelve Rounders logo" loading="lazy">
-			</div>
-			<div class="brand-meta">
-			  <div class="name">TWELVE ROUNDERS</div>
-			  <div class="sub">Black • Grey • Gold — premium boxing aesthetic</div>
-			</div>
-		  </div>
-
+      <aside class="side" aria-label="Brand card">
+        <div class="brand-row">
+          <div class="logo" aria-hidden="true">
+            <img src="logo.png" alt="Twelve Rounders logo" loading="lazy">
+          </div>
+          <div class="brand-meta">
+            <div class="name">TWELVE ROUNDERS</div>
+            <div class="sub">Black • Grey • Gold — premium boxing aesthetic</div>
+          </div>
+        </div>
 
         <h3>What I’m known for</h3>
         <ul class="list">
@@ -770,7 +838,6 @@
     </div>
   </header>
 
-  <!-- Services -->
   <section id="services">
     <div class="wrap">
       <div class="section-head">
@@ -808,7 +875,6 @@
     </div>
   </section>
 
-  <!-- Process -->
   <section id="process">
     <div class="wrap">
       <div class="section-head">
@@ -862,7 +928,6 @@
     </div>
   </section>
 
-  <!-- Work -->
   <section id="work">
     <div class="wrap">
       <div class="section-head">
@@ -873,7 +938,8 @@
       </div>
 
       <div class="portfolio">
-        <div class="shot reveal-on-scroll" data-title="Fight Kit — Premium Clean" data-desc="A clean, fight-night kit with accurate trims, balanced sponsors, and a polished finish." data-tags="Shorts,Colourway,Premium">
+        <div class="shot reveal-on-scroll" data-title="Fight Kit — Premium Clean" data-desc="A clean, fight-night kit with accurate trims, balanced sponsors, and a polished finish." data-tags="Shorts,Colourway,Premium" data-img="kit1.png">
+          <img class="shot-img" src="kit1.png" alt="Premium Clean Kit preview" loading="lazy">
           <div class="inner">
             <div class="label">Premium Clean Kit</div>
             <div class="desc">High-detail look with gold accents and sharp contrast.</div>
@@ -883,7 +949,8 @@
           </div>
         </div>
 
-        <div class="shot reveal-on-scroll" data-title="Fight Kit — Retro/Classic" data-desc="Classic boxing styling with vintage tones and minimal sponsor layout." data-tags="Retro,Classic,Minimal">
+        <div class="shot reveal-on-scroll" data-title="Fight Kit — Retro/Classic" data-desc="Classic boxing styling with vintage tones and minimal sponsor layout." data-tags="Retro,Classic,Minimal" data-img="kit2.png">
+          <img class="shot-img" src="kit2.png" alt="Retro / Classic Kit preview" loading="lazy">
           <div class="inner">
             <div class="label">Retro / Classic Style</div>
             <div class="desc">Old-school vibe, modern quality.</div>
@@ -893,7 +960,8 @@
           </div>
         </div>
 
-        <div class="shot reveal-on-scroll" data-title="Full Set — Shorts + Gloves + Boots" data-desc="A full matching set designed as one complete look." data-tags="Full Set,Gloves,Boots">
+        <div class="shot reveal-on-scroll" data-title="Full Set — Shorts + Gloves + Boots" data-desc="A full matching set designed as one complete look." data-tags="Full Set,Gloves,Boots" data-img="kit3.png">
+          <img class="shot-img" src="kit3.png" alt="Full Set preview" loading="lazy">
           <div class="inner">
             <div class="label">Full Set</div>
             <div class="desc">Shorts, gloves and boots matched perfectly.</div>
@@ -906,7 +974,6 @@
     </div>
   </section>
 
-  <!-- Pricing -->
   <section id="pricing">
     <div class="wrap">
       <div class="section-head">
@@ -956,7 +1023,6 @@
     </div>
   </section>
 
-  <!-- FAQ -->
   <section id="faq">
     <div class="wrap">
       <div class="section-head">
@@ -1010,7 +1076,6 @@
     </div>
   </section>
 
-  <!-- Contact -->
   <section id="contact" class="final">
     <div class="wrap">
       <div class="cta reveal-on-scroll">
@@ -1034,7 +1099,6 @@
     </div>
   </section>
 
-  <!-- Modal (portfolio preview) -->
   <div class="modal" id="modal" aria-hidden="true">
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <div class="modal-top">
@@ -1042,7 +1106,7 @@
         <button class="close" id="closeBtn" type="button">Close</button>
       </div>
       <div class="modal-body">
-        <div class="placeholder">
+        <div class="placeholder" id="modalPlaceholder">
           <div class="left">
             <b id="modalBig">Premium Clean Kit</b>
             <span id="modalDesc">A clean, fight-night kit with accurate trims, balanced sponsors, and a polished finish.</span>
@@ -1054,10 +1118,8 @@
   </div>
 
   <script>
-    // Year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Reveal on scroll
     const revealEls = document.querySelectorAll(".reveal-on-scroll");
     const io = new IntersectionObserver((entries) => {
       for (const e of entries){
@@ -1069,15 +1131,15 @@
     }, { threshold: 0.15 });
     revealEls.forEach(el => io.observe(el));
 
-    // Portfolio modal
     const modal = document.getElementById("modal");
     const closeBtn = document.getElementById("closeBtn");
     const modalTitle = document.getElementById("modalTitle");
     const modalBig = document.getElementById("modalBig");
     const modalDesc = document.getElementById("modalDesc");
     const modalTags = document.getElementById("modalTags");
+    const modalPlaceholder = document.getElementById("modalPlaceholder");
 
-    function openModal({title, desc, tags}){
+    function openModal({title, desc, tags, img}){
       modalTitle.textContent = title;
       modalBig.textContent = title;
       modalDesc.textContent = desc;
@@ -1089,6 +1151,15 @@
         chip.textContent = t;
         modalTags.appendChild(chip);
       });
+
+      if(img){
+        modalPlaceholder.style.backgroundImage =
+          "linear-gradient(135deg, rgba(0,0,0,0.35), rgba(0,0,0,0.75)), url('" + img + "')";
+        modalPlaceholder.style.backgroundSize = "cover";
+        modalPlaceholder.style.backgroundPosition = "center";
+      }else{
+        modalPlaceholder.style.backgroundImage = "";
+      }
 
       modal.classList.add("show");
       modal.setAttribute("aria-hidden","false");
@@ -1107,8 +1178,9 @@
         const title = card.getAttribute("data-title") || "Preview";
         const desc = card.getAttribute("data-desc") || "";
         const tagsRaw = card.getAttribute("data-tags") || "";
+        const img = card.getAttribute("data-img") || "";
         const tags = tagsRaw.split(",").map(s => s.trim()).filter(Boolean);
-        openModal({title, desc, tags});
+        openModal({title, desc, tags, img});
       });
     });
 
